@@ -145,6 +145,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func getOneTache(titre: String) -> Tache{
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Tache> = Tache.fetchRequest()
+        
+        let predicate  = NSPredicate(format: "titre == %@", titre)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Tache] = try managedContext.fetch(fetchRequest)
+            return result[0]
+        } catch {
+            print("GET ONE TACHE " + error.localizedDescription)
+        }
+        return Tache()
+    }
+    
     func deleteAllTaches(){
         print("DELETE ALL TACHES")
         let managedContext = persistentContainer.viewContext

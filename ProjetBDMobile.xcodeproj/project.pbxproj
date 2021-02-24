@@ -14,6 +14,7 @@
 		08B0753625E63F6A005FA936 /* ProjetBDMobile.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 08B0753425E63F6A005FA936 /* ProjetBDMobile.xcdatamodeld */; };
 		08B0753825E63F6B005FA936 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 08B0753725E63F6B005FA936 /* Assets.xcassets */; };
 		08B0753B25E63F6B005FA936 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08B0753925E63F6B005FA936 /* LaunchScreen.storyboard */; };
+		08B0754A25E662D6005FA936 /* AjouterCategorieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08B0754925E662D6005FA936 /* AjouterCategorieTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		08B0753725E63F6B005FA936 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		08B0753A25E63F6B005FA936 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		08B0753C25E63F6B005FA936 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		08B0754925E662D6005FA936 /* AjouterCategorieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AjouterCategorieTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +69,7 @@
 				08B0753925E63F6B005FA936 /* LaunchScreen.storyboard */,
 				08B0753C25E63F6B005FA936 /* Info.plist */,
 				08B0753425E63F6A005FA936 /* ProjetBDMobile.xcdatamodeld */,
+				08B0754925E662D6005FA936 /* AjouterCategorieTableViewController.swift */,
 			);
 			path = ProjetBDMobile;
 			sourceTree = "<group>";
@@ -148,6 +151,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08B0754A25E662D6005FA936 /* AjouterCategorieTableViewController.swift in Sources */,
 				08B0753025E63F6A005FA936 /* ViewController.swift in Sources */,
 				08B0753625E63F6A005FA936 /* ProjetBDMobile.xcdatamodeld in Sources */,
 				08B0752C25E63F6A005FA936 /* AppDelegate.swift in Sources */,
