@@ -10,20 +10,20 @@ import CoreData
 
 class ViewController: UITableViewController {
     
-    var delegate = UIApplication.shared.delegate as! AppDelegate
+    var appDelegate = UIApplication.shared.delegate as! AppDelegate
     var taches: [Tache] = []
     var categories: [Categorie] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        delegate.deleteAllCategories()
+        appDelegate.deleteAllCategories()
         
-        delegate.addCategorie(titre: "Cat1")
-        delegate.addCategorie(titre: "Cat2")
-        delegate.addCategorie(titre: "Cat3")
+        appDelegate.addCategorie(titre: "Cat1")
+        appDelegate.addCategorie(titre: "Cat2")
+        appDelegate.addCategorie(titre: "Cat3")
     
-        categories = delegate.getAllCategories()
+        categories = appDelegate.getAllCategories()
         // Do any additional setup after loading the view.
     }
 
@@ -35,7 +35,7 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate.getAllCategories().count
+        return appDelegate.getAllCategories().count
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -55,9 +55,10 @@ extension ViewController : AjouterCategorieDelegate {
         dismiss(animated: true, completion: nil)
     }
     
-    func didAddCategorie(){
+    func didAddCategorie(titre: String){
+        appDelegate.addCategorie(titre: titre)
+        categories = appDelegate.getAllCategories()
         dismiss(animated: true, completion: nil)
+        tableView.reloadData()
     }
-    
 }
-
