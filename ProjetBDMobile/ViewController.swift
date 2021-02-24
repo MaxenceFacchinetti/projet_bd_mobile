@@ -16,19 +16,24 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        delegate.deleteAllCategories()
         delegate.deleteAllTaches()
+        print("APRES DELETE")
         
         delegate.addCategorie(titre: "Cat1")
         delegate.addCategorie(titre: "Cat2")
+        print("APRES ADD CATE")
         
         delegate.addTache(titre: "tache1",categorie: delegate.getOneCategorie(titre: "Cat1"))
         delegate.addTache(titre: "tache2",categorie: delegate.getOneCategorie(titre: "Cat1"))
         delegate.addTache(titre: "tache3",categorie: delegate.getOneCategorie(titre: "Cat2"))
+        print("APRES ADD TACHE")
+        
         taches = delegate.getAllTaches()
         
         for tache in taches{
             print("Tache : " + tache.titre!)
-            print("Categorie : " + (tache.categorie?.titre!)!)
+            print("Categorie : " + (tache.relationshipCategorie?.titre!)!)
         }
         // Do any additional setup after loading the view.
     }

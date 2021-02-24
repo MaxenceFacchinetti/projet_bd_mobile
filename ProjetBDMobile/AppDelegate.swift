@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tache.setValue(titre,forKey:"titre")
         tache.setValue(Date(),forKey: "dateCrea")
         tache.setValue(Date(), forKey: "dateMaj")
-        tache.setValue(categorie, forKey: "categorie")
+        tache.setValue(categorie, forKey: "relationshipCategorie")
         print("ADD TACHE")
         saveContext()
     }
@@ -115,6 +115,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return []
     }
     
+    func getAllCategories() -> [Categorie]{
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Categorie> = Categorie.fetchRequest()
+        
+        do{
+            let result: [Categorie] = try managedContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("GET ALL TACHES " + error.localizedDescription)
+        }
+        return []
+    }
+    
     func getOneCategorie(titre: String) -> Categorie{
         let managedContext = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Categorie> = Categorie.fetchRequest()
@@ -133,10 +146,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func deleteAllTaches(){
+        print("DELETE ALL TACHES")
         let managedContext = persistentContainer.viewContext
         let taches = getAllTaches()
         for tache in taches {
             managedContext.delete(tache)
+        }
+    }
+    
+    func deleteAllCategories(){
+        print("DELETE ALL CATEGORIES")
+        let managedContext = persistentContainer.viewContext
+        let categories = getAllCategories()
+        for categorie in categories {
+            managedContext.delete(categorie)
         }
     }
 
