@@ -76,6 +76,69 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
+    
+    func addTache(titre: String, categorie: Categorie){
+        let managedContext = persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Tache", in: managedContext)
+        let tache = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        tache.setValue(titre,forKey:"titre")
+        tache.setValue(Date(),forKey: "dateCrea")
+        tache.setValue(Date(), forKey: "dateMaj")
+        tache.setValue(categorie, forKey: "categorie")
+        print("ADD TACHE")
+        saveContext()
+    }
+    
+    func addCategorie(titre: String){
+        let managedContext = persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Categorie", in: managedContext)
+        let categorie = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        categorie.setValue(titre,forKey:"titre")
+        categorie.setValue(Date(),forKey: "dateCrea")
+        categorie.setValue(Date(), forKey: "dateMaj")
+        print("ADD CATEGORIE")
+        saveContext()
+    }
+
+    func getAllTaches() -> [Tache]{
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Tache> = Tache.fetchRequest()
+        
+        do{
+            let result: [Tache] = try managedContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("GET ALL TACHES " + error.localizedDescription)
+        }
+        return []
+    }
+    
+    func getOneCategorie(titre: String) -> Categorie{
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Categorie> = Categorie.fetchRequest()
+        
+        let predicate  = NSPredicate(format: "titre == %@", titre)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Categorie] = try managedContext.fetch(fetchRequest)
+            return result[0]
+        } catch {
+            print("GET ONE CATEGORIE " + error.localizedDescription)
+        }
+        return Categorie()
+        
+    }
+    
+    func deleteAllTaches(){
+        let managedContext = persistentContainer.viewContext
+        let taches = getAllTaches()
+        for tache in taches {
+            managedContext.delete(tache)
+        }
+    }
 
 }
 

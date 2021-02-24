@@ -1,4 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Categorie" representedClassName="Categorie" syncable="YES" codeGenerationType="class">
+        <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateMaj" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="titre" optional="YES" attributeType="String"/>
+        <relationship name="relationshipTache" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Tache" inverseName="relationshipCategorie" inverseEntity="Tache"/>
+    </entity>
+    <entity name="Image" representedClassName="Image" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateMaj" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <relationship name="relationshipTache" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Tache" inverseName="relationshipImage" inverseEntity="Tache"/>
+    </entity>
+    <entity name="Tache" representedClassName="Tache" syncable="YES" codeGenerationType="class">
+        <attribute name="categorie" optional="YES" attributeType="Transformable" customClassName="Categorie"/>
+        <attribute name="checked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dateMaj" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="image" optional="YES" attributeType="Transformable" allowsExternalBinaryDataStorage="YES" customClassName="Image"/>
+        <attribute name="titre" optional="YES" attributeType="String"/>
+        <relationship name="relationshipCategorie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categorie" inverseName="relationshipTache" inverseEntity="Categorie"/>
+        <relationship name="relationshipImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="relationshipTache" inverseEntity="Image"/>
+    </entity>
+    <elements>
+        <element name="Tache" positionX="-460.05859375" positionY="-18.09375" width="128" height="163"/>
+        <element name="Categorie" positionX="-54" positionY="18" width="128" height="103"/>
+        <element name="Image" positionX="40.94140625" positionY="182.59375" width="128" height="103"/>
+    </elements>
 </model>

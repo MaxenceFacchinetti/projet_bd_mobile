@@ -58,6 +58,7 @@
 		08B0752A25E63F6A005FA936 /* ProjetBDMobile */ = {
 			isa = PBXGroup;
 			children = (
+				08B0754325E6475E005FA936 /* model */,
 				08B0752B25E63F6A005FA936 /* AppDelegate.swift */,
 				08B0752D25E63F6A005FA936 /* SceneDelegate.swift */,
 				08B0752F25E63F6A005FA936 /* ViewController.swift */,
@@ -68,6 +69,13 @@
 				08B0753425E63F6A005FA936 /* ProjetBDMobile.xcdatamodeld */,
 			);
 			path = ProjetBDMobile;
+			sourceTree = "<group>";
+		};
+		08B0754325E6475E005FA936 /* model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
