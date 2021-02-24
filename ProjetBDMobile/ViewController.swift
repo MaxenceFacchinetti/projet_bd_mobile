@@ -13,11 +13,12 @@ class ViewController: UITableViewController {
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     var taches: [Tache] = []
     var categories: [Categorie] = []
+    var categorieModif: Categorie!
+    var testEdit: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appDelegate.deleteAllCategories()
         
         appDelegate.addCategorie(titre: "Cat1")
         appDelegate.addCategorie(titre: "Cat2")
@@ -38,11 +39,24 @@ class ViewController: UITableViewController {
         return appDelegate.getAllCategories().count
     }
     
+    override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
+        categorieModif = appDelegate.getOneCategorie(titre: categories[indexPath.row].titre!)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if(segue.identifier == "addCategorie"){
             if let dest = segue.destination as? UINavigationController {
                 let controller = dest.topViewController as? AjouterCategorieTableViewController
                 controller?.delegate = self
+                controller?.typeManip = .ADD
+            }
+        }
+        
+        if(segue.identifier == "editCategorie"){
+            if let dest = segue.destination as? UINavigationController {
+                let controller = dest.topViewController as? AjouterCategorieTableViewController
+                controller?.delegate = self
+                controller?.typeManip = .EDIT
             }
         }
     }
@@ -57,6 +71,17 @@ extension ViewController : AjouterCategorieDelegate {
     
     func didAddCategorie(titre: String){
         appDelegate.addCategorie(titre: titre)
+        categories = appDelegate.getAllCategories()
+        dismiss(animated: true, completion: nil)
+        tableView.reloadData()
+    }
+}
+
+extension ViewController : EditCategorieDelegate {
+    
+    func didEditCategorie(titre: String){
+        categorieModif.titre = titre
+        appDelegate.saveContext()
         categories = appDelegate.getAllCategories()
         dismiss(animated: true, completion: nil)
         tableView.reloadData()

@@ -32,6 +32,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="8Q8-eL-ud5" kind="show" identifier="editCategorie" trigger="accessoryAction" id="0DW-BK-F6u"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -92,13 +95,14 @@
                                 <action selector="cancel:" destination="aQO-DQ-8Zt" id="Qut-t3-GMF"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="yWv-6N-qTi">
+                        <barButtonItem key="rightBarButtonItem" title="Item" id="yWv-6N-qTi">
                             <connections>
-                                <action selector="addCategorie:" destination="aQO-DQ-8Zt" id="Zf4-fx-K6d"/>
+                                <action selector="manipCategorie:" destination="aQO-DQ-8Zt" id="0zu-sW-8ER"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="barButtonRight" destination="yWv-6N-qTi" id="ghx-Rg-Vlg"/>
                         <outlet property="textField" destination="Qqa-7M-N2Q" id="GYP-bh-Lcj"/>
                     </connections>
                 </tableViewController>
@@ -140,6 +144,9 @@
             <point key="canvasLocation" x="-1983" y="26"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="0DW-BK-F6u"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
