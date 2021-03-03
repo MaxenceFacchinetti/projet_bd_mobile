@@ -16,13 +16,14 @@
         <attribute name="checked" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="dateCrea" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dateMaj" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="desc" optional="YES" attributeType="String"/>
         <attribute name="titre" optional="YES" attributeType="String"/>
         <relationship name="relationshipCategorie" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Categorie" inverseName="relationshipTache" inverseEntity="Categorie"/>
         <relationship name="relationshipImage" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Image" inverseName="relationshipTache" inverseEntity="Image"/>
     </entity>
     <elements>
-        <element name="Tache" positionX="-460.05859375" positionY="-18.09375" width="128" height="133"/>
         <element name="Categorie" positionX="-54" positionY="18" width="128" height="103"/>
         <element name="Image" positionX="40.94140625" positionY="182.59375" width="128" height="103"/>
+        <element name="Tache" positionX="-460.05859375" positionY="-18.09375" width="128" height="148"/>
     </elements>
 </model>

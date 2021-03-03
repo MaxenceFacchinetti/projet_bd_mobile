@@ -14,15 +14,11 @@ class ViewController: UITableViewController {
     var taches: [Tache] = []
     var categories: [Categorie] = []
     var categorieModif: Categorie!
+    var categorieSelected: Categorie!
     var testEdit: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        appDelegate.addCategorie(titre: "Cat1")
-        appDelegate.addCategorie(titre: "Cat2")
-        appDelegate.addCategorie(titre: "Cat3")
     
         categories = appDelegate.getAllCategories()
         // Do any additional setup after loading the view.
@@ -58,6 +54,26 @@ class ViewController: UITableViewController {
                 controller?.delegate = self
                 controller?.typeManip = .EDIT
             }
+        }
+        
+        if(segue.identifier == "listeTaches"){
+            if let dest = segue.destination as? UINavigationController {
+                let controller = dest.topViewController as? ListeTacheTableViewController
+                controller?.delegate = self 
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        categorieSelected = categories[indexPath.row]
+    }
+    
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if(editingStyle == .delete){
+            print(categories[indexPath.row].titre! + " supprimé")
+            appDelegate.supprimerCategorie(categorie: categories[indexPath.row])
+            categories = appDelegate.getAllCategories()
+            tableView.reloadData()
         }
     }
     

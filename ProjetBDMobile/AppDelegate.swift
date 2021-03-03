@@ -77,7 +77,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func addTache(titre: String, categorie: Categorie){
+    func supprimerCategorie(categorie: Categorie){
+        let context = persistentContainer.viewContext
+        context.delete(categorie)
+        saveContext()
+    }
+    
+    func supprimerTache(tache: Tache){
+        let context = persistentContainer.viewContext
+        context.delete(tache)
+        saveContext()
+    }
+    
+    func checkTache(tache: Tache){
+        if tache.checked {
+            tache.checked = false
+        }
+        else{
+            tache.checked = true
+        }
+    }
+    
+    func addTache(titre: String, categorie: Categorie, desc: String){
         let managedContext = persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Tache", in: managedContext)
         let tache = NSManagedObject(entity: entity!, insertInto: managedContext)
@@ -86,6 +107,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tache.setValue(Date(),forKey: "dateCrea")
         tache.setValue(Date(), forKey: "dateMaj")
         tache.setValue(categorie, forKey: "relationshipCategorie")
+        tache.setValue(false, forKey: "checked")
+        tache.setValue(desc, forKey: "desc")
+        print("ADD TACHE")
+        saveContext()
+    }
+    
+    func addTache(titre: String, categorie: Categorie, desc: String, image: Image){
+        let managedContext = persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Tache", in: managedContext)
+        let tache = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        tache.setValue(titre,forKey:"titre")
+        tache.setValue(Date(),forKey: "dateCrea")
+        tache.setValue(Date(), forKey: "dateMaj")
+        tache.setValue(categorie, forKey: "relationshipCategorie")
+        tache.setValue(false, forKey: "checked")
+        tache.setValue(desc, forKey: "desc")
+        tache.setValue(image, forKey: "relationshipImage")
         print("ADD TACHE")
         saveContext()
     }
@@ -100,6 +139,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         categorie.setValue(Date(), forKey: "dateMaj")
         print("ADD CATEGORIE")
         saveContext()
+    }
+    
+    func getAllTachesFromCategorie(categorie: Categorie) -> [Tache] {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Tache> = Tache.fetchRequest()
+        
+        let predicate = NSPredicate(format: "relationshipCategorie == %@",categorie)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Tache] = try managedContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("GET ALL TACHE FROM CATEGORIE " + error.localizedDescription)
+        }
+        
+        return []
     }
 
     func getAllTaches() -> [Tache]{
