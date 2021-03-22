@@ -203,6 +203,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return []
     }
     
+    func getTachesRecherche(search: String, categorie: Categorie) -> [Tache] {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Tache> = Tache.fetchRequest()
+        
+        let predicate  = NSPredicate(format: "(titre CONTAINS[c] %@ OR desc CONTAINS[c] %@) AND relationshipCategorie == %@", search, search, categorie)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Tache] = try managedContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("GET TACHE RECHERCHE" + error.localizedDescription)
+        }
+        return []    }
+    
+    func getCategoriesRecherche(search: String) -> [Categorie] {
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Categorie> = Categorie.fetchRequest()
+        
+        let predicate  = NSPredicate(format: "titre CONTAINS[c] %@", search)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Categorie] = try managedContext.fetch(fetchRequest)
+            return result
+        } catch {
+            print("GET CATEGORIE RECHERCHE" + error.localizedDescription)
+        }
+        return []    }
+    
     func getAllCategories() -> [Categorie]{
         let managedContext = persistentContainer.viewContext
         let fetchRequest: NSFetchRequest<Categorie> = Categorie.fetchRequest()

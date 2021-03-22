@@ -13,6 +13,7 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
         
     }
     
+    @IBOutlet var searchBar: UISearchBar!
     var delegate: ViewController?
     var taches: [Tache] = []
     var tacheModif: Tache?
@@ -21,7 +22,7 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        searchBar.delegate = self 
         self.title = delegate!.categorieSelected.titre
         
         rafraichirTaches()
@@ -87,7 +88,7 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         appDelegate.checkTache(tache: taches[indexPath.row])
-        taches = appDelegate.getAllTachesFromCategorie(categorie: (delegate?.categorieSelected)!)
+        taches = appDelegate.getTachesRecherche(search: searchBar.text!, categorie: (delegate?.categorieSelected)!)
         tableView.reloadData()
     }
     
@@ -131,6 +132,18 @@ extension ListeTacheTableViewController : EditTacheDelegate {
         tableView.reloadData()
     }
     
-    
 
+}
+
+extension ListeTacheTableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText != ""){
+            taches = appDelegate.getTachesRecherche(search: searchText, categorie: (delegate?.categorieSelected)!)
+            tableView.reloadData()
+        }else{
+            taches = appDelegate.getAllTachesFromCategorie(categorie: (delegate?.categorieSelected)!)
+            tableView.reloadData()
+        }
+        
+    }
 }

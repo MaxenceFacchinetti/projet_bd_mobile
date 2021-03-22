@@ -8,7 +8,7 @@
 import UIKit
 import CoreData
 
-class ViewController: UITableViewController {
+class ViewController: UITableViewController, UISearchBarDelegate {
     
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
     var taches: [Tache] = []
@@ -16,10 +16,20 @@ class ViewController: UITableViewController {
     var categorieModif: Categorie!
     var categorieSelected: Categorie!
     var testEdit: String!
+    @IBOutlet var searchBar: UISearchBar!
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if(searchText != ""){
+            categories = appDelegate.getCategoriesRecherche(search: searchText)
+        }else{
+            categories = appDelegate.getAllCategories()
+        }
+        tableView.reloadData()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        searchBar.delegate = self
         categories = appDelegate.getAllCategories()
         // Do any additional setup after loading the view.
     }
@@ -32,7 +42,7 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return appDelegate.getAllCategories().count
+        return categories.count
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
