@@ -113,10 +113,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         saveContext()
     }
     
-    func addTache(titre: String, categorie: Categorie, desc: String, image: Image){
+    func addTache(titre: String, categorie: Categorie, desc: String, data: Data){
         let managedContext = persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "Tache", in: managedContext)
         let tache = NSManagedObject(entity: entity!, insertInto: managedContext)
+        
+        addImage(data: data)
+        let image = getOneImage(data: data)
         
         tache.setValue(titre,forKey:"titre")
         tache.setValue(Date(),forKey: "dateCrea")
@@ -126,6 +129,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         tache.setValue(desc, forKey: "desc")
         tache.setValue(image, forKey: "relationshipImage")
         print("ADD TACHE")
+        saveContext()
+    }
+    
+    
+    
+    func getOneImage(data: Data) -> Image{
+        let managedContext = persistentContainer.viewContext
+        let fetchRequest: NSFetchRequest<Image> = Image.fetchRequest()
+        
+        let predicate  = NSPredicate(format: "data == %@", data as CVarArg)
+        fetchRequest.predicate = predicate
+        
+        do{
+            let result: [Image] = try managedContext.fetch(fetchRequest)
+            return result[0]
+        } catch {
+            print("GET ONE IMAGE " + error.localizedDescription)
+        }
+        return Image()
+    }
+    
+    func addImage(data: Data){
+        let managedContext = persistentContainer.viewContext
+        let entity = NSEntityDescription.entity(forEntityName: "Image", in: managedContext)
+        let image = NSManagedObject(entity: entity!, insertInto: managedContext)
+        image.setValue(data, forKey: "data")
+        image.setValue(Date(),forKey: "dateCrea")
+        image.setValue(Date(),forKey: "dateMaj")
+        print("ADD IMAGE")
         saveContext()
     }
     

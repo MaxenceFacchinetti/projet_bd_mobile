@@ -97,6 +97,7 @@ extension ViewController : EditCategorieDelegate {
     
     func didEditCategorie(titre: String){
         categorieModif.titre = titre
+        categorieModif.dateMaj = Date()
         appDelegate.saveContext()
         categories = appDelegate.getAllCategories()
         dismiss(animated: true, completion: nil)

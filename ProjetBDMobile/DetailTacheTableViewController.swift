@@ -8,12 +8,12 @@
 import UIKit
 
 protocol AjouterTacheDelegate : ListeTacheTableViewController{
-    func didAddCTache(titre: String, desc: String, image: Image)
+    func didAddTache(titre: String, desc: String, image: Data)
     func didCancel()
 }
 
 protocol EditTacheDelegate: ListeTacheTableViewController{
-    func didEditTache(titre: String, desc: String, image: Image)
+    func didEditTache(titre: String, desc: String, image: Data)
 }
 
 enum TypeManipTache{
@@ -24,7 +24,10 @@ class DetailTacheTableViewController: UITableViewController, UIImagePickerContro
     
     var delegate: ListeTacheTableViewController?
     var typeManip: TypeManipTache = .ADD
-    
+    @IBOutlet weak var itemButton: UIBarButtonItem!
+    @IBOutlet weak var titleTache: UITextField!
+    @IBOutlet weak var descTache: UITextField!
+    var imageDefault: UIImage!
     
     @IBOutlet weak var tacheImageView: UIImageView!
     let imagePicker = UIImagePickerController()
@@ -32,14 +35,25 @@ class DetailTacheTableViewController: UITableViewController, UIImagePickerContro
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        imageDefault = tacheImageView.image!
         imagePicker.delegate = self
         
         switch(typeManip){
         case .ADD:
             title = "Ajouter une tâche"
+            itemButton.title = "Add"
             break;
         case .EDIT:
             title = "Modifier une tâche"
+            itemButton.title = "Edit"
+            titleTache.text = delegate?.tacheModif?.titre
+            descTache.text = delegate?.tacheModif?.desc
+            do{
+                tacheImageView.image = try UIImage.init(data: (delegate?.tacheModif?.relationshipImage?.data)!)
+            }catch{
+                print(error)
+            }
+            
             break;
         }
 
@@ -77,6 +91,19 @@ class DetailTacheTableViewController: UITableViewController, UIImagePickerContro
     @IBAction func cancel(_ sender: Any) {
         delegate?.didCancel()
     }
-
-
+    @IBAction func supprImage(_ sender: Any) {
+        tacheImageView.image = imageDefault
+    }
+    
+    @IBAction func itemClick(_ sender: Any) {
+        switch(typeManip){
+        case .ADD:
+            delegate?.didAddTache(titre: titleTache.text!, desc: descTache.text!, image: (tacheImageView.image?.pngData())!)
+            break;
+        case .EDIT:
+            delegate?.didEditTache(titre: titleTache.text!, desc: descTache.text!, image: (tacheImageView.image?.pngData())!)
+            break;
+        }
+    }
+    
 }

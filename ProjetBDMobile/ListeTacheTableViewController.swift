@@ -17,7 +17,6 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
     var taches: [Tache] = []
     var tacheModif: Tache?
     var appDelegate = UIApplication.shared.delegate as! AppDelegate
-    var resultSearchController: UISearchController?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,19 +24,13 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
         
         self.title = delegate!.categorieSelected.titre
         
+        rafraichirTaches()
+
+        
+    }
+    
+    func rafraichirTaches(){
         taches = appDelegate.getAllTachesFromCategorie(categorie: delegate!.categorieSelected)
-        
-        resultSearchController = ({
-                let controller = UISearchController(searchResultsController: nil)
-                controller.searchResultsUpdater = self
-                controller.dimsBackgroundDuringPresentation = false
-                controller.searchBar.sizeToFit()
-
-                tableView.tableHeaderView = controller.searchBar
-
-                return controller
-            })()
-        
     }
     
     override func tableView(_ tableView: UITableView, accessoryButtonTappedForRowWith indexPath: IndexPath) {
@@ -109,19 +102,33 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
 }
 
 extension ListeTacheTableViewController : AjouterTacheDelegate {
-    func didAddCTache(titre: String, desc: String, image: Image) {
-        
+    func didAddTache(titre: String, desc: String, image: Data) {
+        appDelegate.addTache(titre: titre, categorie: (delegate?.categorieSelected)!, desc: desc,data: image)
+        appDelegate.saveContext()
+        didCancel()
+        rafraichirTaches()
+        tableView.reloadData()
     }
     
     
     func didCancel() {
         dismiss(animated: true, completion: nil)
+        tableView.reloadData()
     }
 }
 
 extension ListeTacheTableViewController : EditTacheDelegate {
-    func didEditTache(titre: String, desc: String, image: Image) {
-        
+    func didEditTache(titre: String, desc: String, image: Data) {
+        appDelegate.addImage(data: image)
+        let image = appDelegate.getOneImage(data: image)
+        tacheModif?.relationshipImage = image
+        tacheModif?.dateMaj = Date()
+        tacheModif?.desc = desc
+        tacheModif?.titre = titre
+        appDelegate.saveContext()
+        didCancel()
+        rafraichirTaches()
+        tableView.reloadData()
     }
     
     
