@@ -162,14 +162,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func addCategorie(titre: String){
-        let managedContext = persistentContainer.viewContext
+        let managedContext = persistentContainer.viewContext/*
         let entity = NSEntityDescription.entity(forEntityName: "Categorie", in: managedContext)
         let categorie = NSManagedObject(entity: entity!, insertInto: managedContext)
         
         categorie.setValue(titre,forKey:"titre")
         categorie.setValue(Date(),forKey: "dateCrea")
-        categorie.setValue(Date(), forKey: "dateMaj")
+        categorie.setValue(Date(), forKey: "dateMaj")*/
         print("ADD CATEGORIE")
+        
+        let categorie2 = Categorie(context: managedContext)
+        categorie2.titre = titre
+        categorie2.dateMaj = Date()
+        categorie2.dateCrea = Date()
+        
         saveContext()
     }
     

@@ -88,7 +88,12 @@ class ListeTacheTableViewController: UITableViewController, UISearchResultsUpdat
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         appDelegate.checkTache(tache: taches[indexPath.row])
-        taches = appDelegate.getTachesRecherche(search: searchBar.text!, categorie: (delegate?.categorieSelected)!)
+        if(searchBar.text == ""){
+            taches = appDelegate.getAllTachesFromCategorie(categorie: (delegate?.categorieSelected)!)
+        }else{
+            taches = appDelegate.getTachesRecherche(search: searchBar.text!, categorie: (delegate?.categorieSelected)!)
+        }
+        
         tableView.reloadData()
     }
     
